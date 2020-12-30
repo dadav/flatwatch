@@ -22,14 +22,14 @@ class SqlBackend:
                                  chatid integer not null,\
                                  location text not null,\
                                  locationid integer not null,\
-                                 price real,\
+                                 price integer,\
                                  rooms integer,\
-                                 area real,\
-                                 radius real,\
+                                 area integer,\
+                                 radius integer,\
                                  count integer)')
             self._connection.commit()
 
-    def save(self, chatid: int, location: str, locationid: int, price: Optional[float] = None, rooms: Optional[int] = None, area: Optional[float] = None, radius: Optional[float] = None) -> bool:
+    def save(self, chatid: int, location: str, locationid: int, price: Optional[int] = None, rooms: Optional[int] = None, area: Optional[int] = None, radius: Optional[int] = None) -> bool:
         try:
             with self._lock:
                 self._cursor.execute("insert into data values (null,?,?,?,?,?,?,?,-1)", (chatid, location, locationid, price, rooms, area, radius))

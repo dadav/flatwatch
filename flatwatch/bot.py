@@ -257,7 +257,11 @@ def fetcher(updater: Updater, backend: SqlBackend, config: Dict):
     while True:
         for entry in backend.load():
             entryid, chat_id, location, locationid, price, rooms, area, radius, count = entry
-            current_flats = flat_count(location, locationid, price, rooms, area, radius)
+            try:
+                current_flats = flat_count(location, locationid, price, rooms, area, radius)
+            except Exception as count_err:
+                log.debug(count_err)
+                continue
             if count == -1:
                 # first lookup
                 backend.set_count(entryid, current_flats)
