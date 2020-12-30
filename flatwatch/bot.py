@@ -165,7 +165,7 @@ def cmd_list(update: Update, context: CallbackContext) -> None:
     txt = list()
     for entry in entries:
         _, _, location, _, price, rooms, area, radius, count = entry
-        txt.append('{} ({}€/{}m²/{} rooms/{}km)'.format(location, price or 'ANY ', area or 'ANY ', rooms or 'ANY ', radius or 'ANY '))
+        txt.append('{} ({}€/{}m²/{} rooms/{}km)[flats: {}]'.format(location, price or 'ANY ', area or 'ANY ', rooms or 'ANY ', radius or 'ANY ', count))
     update.message.reply_text('\n'.join(txt))
 
 def cmd_del(update: Update, context: CallbackContext) -> int:
