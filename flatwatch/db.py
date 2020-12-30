@@ -54,7 +54,7 @@ class SqlBackend:
     def set_count(self, entry: int, value: int) -> bool:
         try:
             with self._lock:
-                self._cursor.execute('update data set count=? where id=?', (entry, value,))
+                self._cursor.execute('update data set count=? where id=?', (value, entry,))
                 self._connection.commit()
             return True
         except sqlite3.Error as sql_err:
