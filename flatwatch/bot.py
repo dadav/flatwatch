@@ -165,7 +165,7 @@ def cmd_list(update: Update, context: CallbackContext) -> None:
     txt = list()
     for entry in entries:
         _, _, location, _, price, rooms, area, radius, count = entry
-        txt.append('{} ({}€/{}m²/{} rooms/{}km)'.format(location, price, area, rooms, radius))
+        txt.append('{} ({}€/{}m²/{} rooms/{}km)'.format(location, price or 'ANY ', area or 'ANY ', rooms or 'ANY ', radius or 'ANY '))
     update.message.reply_text('\n'.join(txt))
 
 def cmd_del(update: Update, context: CallbackContext) -> int:
@@ -183,7 +183,7 @@ def cmd_del(update: Update, context: CallbackContext) -> int:
     for entry in entries:
         entryid, _, location, _, price, rooms, area, radius, count = entry
         options.append([InlineKeyboardButton(
-            '{} ({}€/{}m²/{} rooms/{}km)'.format(location, price, area, rooms, radius),
+            '{} ({}€/{}m²/{} rooms/{}km)'.format(location, price or 'ANY ', area or 'ANY ', rooms or 'ANY ', radius or 'ANY '),
             callback_data=entryid)])
     reply_markup = InlineKeyboardMarkup(options)
     user_data['choice'] = 'deletion'
