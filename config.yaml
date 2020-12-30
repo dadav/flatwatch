@@ -1,6 +1,6 @@
 ---
 fetcher:
-  interval: 5
+  interval: 60
 
 telegram:
   token: token.txt
