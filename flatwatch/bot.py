@@ -169,7 +169,19 @@ def cmd_list(update: Update, context: CallbackContext) -> None:
     txt = list()
     for entry in entries:
         _, _, location, _, price, rooms, area, radius, count = entry
-        txt.append('{} ({}€/{}m²/{} rooms/{}km)[flats: {}]'.format(location, price or 'ANY ', area or 'ANY ', rooms or 'ANY ', radius or 'ANY ', count))
+        filters = list()
+        if price:
+            filters.append('{}€'.format(price))
+        if area:
+            filters.append('{}m²'.format(area))
+        if rooms:
+            filters.append('{} rooms'.format(rooms))
+        if radius:
+            filters.append('{}km'.format(radius))
+        filters_joined = '/'.join(filters)
+        if not filters_joined:
+            filters_joined = 'no filters'
+        txt.append('{} (filters: {})[flats: {}]'.format(location, filters_joined, count))
     update.message.reply_text('\n'.join(txt))
 
 def cmd_del(update: Update, context: CallbackContext) -> int:
@@ -186,8 +198,20 @@ def cmd_del(update: Update, context: CallbackContext) -> int:
     options = list()
     for entry in entries:
         entryid, _, location, _, price, rooms, area, radius, count = entry
+        filters = list()
+        if price:
+            filters.append('{}€'.format(price))
+        if area:
+            filters.append('{}m²'.format(area))
+        if rooms:
+            filters.append('{} rooms'.format(rooms))
+        if radius:
+            filters.append('{}km'.format(radius))
+        filters_joined = '/'.join(filters)
+        if not filters_joined:
+            filters_joined = 'no filters'
         options.append([InlineKeyboardButton(
-            '{} ({}€/{}m²/{} rooms/{}km)'.format(location, price or 'ANY ', area or 'ANY ', rooms or 'ANY ', radius or 'ANY '),
+            '{} ({})'.format(location, filters_joined),
             callback_data=entryid)])
     reply_markup = InlineKeyboardMarkup(options)
     user_data['choice'] = 'deletion'
