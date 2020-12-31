@@ -9,7 +9,7 @@ from .immo import locations, flat_count
 from .db import SqlBackend
 from typing import Dict
 from datetime import datetime, timedelta
-from functools import wraps
+from random import randint
 
 log = logging.getLogger('rich')
 
@@ -270,8 +270,8 @@ def fetcher(updater: Updater, backend: SqlBackend, config: Dict):
                 updater.bot.send_message(chat_id, 'ALERT! The flatcount for {} {} from {} to {}'.format(
                     "{} ({}€/{}m²/{} rooms)".format(location, price, area, rooms), inc_dec, count, current_flats))
                 backend.set_count(entryid, current_flats)
-            sleep(0.5)
-        sleep(config['fetcher']['interval'])
+            sleep(0.5 + randint(0, 1))
+        sleep(config['fetcher']['interval'] + randint(0, 10))
 
 
 def start(token: str, backend: SqlBackend, config: Dict):
