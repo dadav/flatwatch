@@ -181,7 +181,7 @@ def cmd_list(update: Update, context: CallbackContext) -> None:
         filters_joined = '/'.join(filters)
         if not filters_joined:
             filters_joined = 'no filters'
-        txt.append('{} (filters: {})[flats: {}]'.format(location, filters_joined, count))
+        txt.append('{} ({})[flats: {}]'.format(location, filters_joined, count))
     update.message.reply_text('\n'.join(txt))
 
 def cmd_del(update: Update, context: CallbackContext) -> int:
